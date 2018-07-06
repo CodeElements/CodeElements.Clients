@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>CodeElements.Clients</id>
-        <version>1.0</version>
+        <version>1.1</version>
         <authors>Vincent (Anapher)</authors>
         <owners>Anapher</owners>
         <licenseUrl>https://github.com/CodeElements/CodeElements.Clients/blob/master/LICENSE</licenseUrl>
@@ -10,7 +10,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <developmentDependency>true</developmentDependency>
         <description>A source code package designed to provide utilities to build up REST resources very fast and clean.</description>
-        <summary>A source code package designed to provide utilities to build up REST resources very fast and clean.</summary>
+        <summary>A source code package designed to provide utilities to build up REST resources very fast and clean. Provides essential classes to call versioned resources, fluent methods to build up request and unpack the response.</summary>
         <copyright>Copyright Vincent (Anapher) 2018</copyright>
         <tags>http, rest, client, resources</tags>
         <contentFiles>

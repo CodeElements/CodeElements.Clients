@@ -35,6 +35,14 @@ namespace YourRootNamespace.Clients.Helpers
             return this;
         }
 
+        public ResponseFactory<T> ConfigureJsonSettings(Action<JsonSerializerSettings> jsonSettingsAction)
+        {
+            _jsonSerializerSettings = JsonContent.GetDefaultSettings();
+            jsonSettingsAction(_jsonSerializerSettings);
+
+            return this;
+        }
+
         public async Task<T> ToResult()
         {
             using (var response = await _response)
