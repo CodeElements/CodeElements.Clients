@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>CodeElements.Clients</id>
+        <version>1.0</version>
+        <authors>Vincent (Anapher)</authors>
+        <owners>Anapher</owners>
+        <licenseUrl>https://github.com/CodeElements/CodeElements.Clients/blob/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/CodeElements/CodeElements.Clients</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <developmentDependency>true</developmentDependency>
+        <description>A source code package designed to provide utilities to build up REST resources very fast and clean.</description>
+        <summary>A source code package designed to provide utilities to build up REST resources very fast and clean.</summary>
+        <copyright>Copyright Vincent (Anapher) 2018</copyright>
+        <tags>http, rest, client, resources</tags>
+        <contentFiles>
+            <files include="**/*.cs.pp" />
+        </contentFiles>
+        <dependencies>
+            <group targetFramework="netstandard2.0">
+                <dependency id="Newtonsoft.Json" version="11.0.2" />
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="**/*.cs.pp" target="contentFiles/cs/netstandard2.0" />
+    </files>
+</package>
