@@ -11,9 +11,17 @@ namespace YourRootNamespace.Clients.Helpers
 {
     public static class RequestBuilderExtensions
     {
+        public static IRestClient DefaultClient { get; set; }
+
         public static IRequestBuilder WithBody(this IRequestBuilder requestBuilder, object body)
         {
             requestBuilder.Content = new JsonContent(body);
+            return requestBuilder;
+        }
+
+        public static IRequestBuilder WithBody(this IRequestBuilder requestBuilder, JsonContent body)
+        {
+            requestBuilder.Content = body;
             return requestBuilder;
         }
 
@@ -26,7 +34,7 @@ namespace YourRootNamespace.Clients.Helpers
         public static async Task<HttpResponseMessage> Execute(this IRequestBuilder requestBuilder, IRestClient client)
         {
             using (var request = requestBuilder.Build())
-                return await client.SendMessage(request);
+                return await (client ?? DefaultClient).SendMessage(request);
         }
 
         public static IEnumerable<KeyValuePair<string, string>> ToPairs(this NameValueCollection collection)
