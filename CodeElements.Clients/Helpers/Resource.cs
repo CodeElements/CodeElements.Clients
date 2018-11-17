@@ -21,8 +21,7 @@ namespace YourRootNamespace.Clients.Helpers
         protected static RequestBuilder CreateRequest(HttpVerb verb, object resource, HttpContent content) =>
             new RequestBuilder(CombineUrlWithResource(new TResource().ResourceUri, resource?.ToString()))
             {
-                Content = content,
-                HttpMethod = verb.ToMethod()
+                Message = {Content = content, Method = verb.ToMethod()}
             };
     }
 }

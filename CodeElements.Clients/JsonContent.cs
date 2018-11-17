@@ -6,7 +6,12 @@ using Newtonsoft.Json.Serialization;
 
 namespace YourRootNamespace.Clients
 {
-    public class JsonContent : StringContent
+#if CLIENTS_INTERNAL
+    internal
+#else
+    public
+#endif
+    class JsonContent : StringContent
     {
         public static readonly JsonSerializerSettings JsonSettings = GetDefaultSettings();
 

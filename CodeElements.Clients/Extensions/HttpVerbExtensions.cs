@@ -4,7 +4,12 @@ using YourRootNamespace.Clients.Helpers;
 
 namespace YourRootNamespace.Clients.Extensions
 {
-    public static class HttpVerbExtensions
+#if CLIENTS_INTERNAL
+    internal
+#else
+    public
+#endif
+    static class HttpVerbExtensions
     {
         public static HttpMethod ToMethod(this HttpVerb verb)
         {

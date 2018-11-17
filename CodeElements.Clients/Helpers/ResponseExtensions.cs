@@ -3,7 +3,12 @@ using System.Threading.Tasks;
 
 namespace YourRootNamespace.Clients.Helpers
 {
-    internal static class ResponseExtensions
+#if CLIENTS_INTERNAL
+    internal
+#else
+    public
+#endif
+    static class ResponseExtensions
     {
         public static Task<T> Return<T>(this Task<HttpResponseMessage> response)
         {

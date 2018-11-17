@@ -5,17 +5,22 @@ using System.Net.Http;
 
 namespace YourRootNamespace.Clients.Helpers
 {
-    public class RequestBuilder : IRequestBuilder
+#if CLIENTS_INTERNAL
+    internal
+#else
+    public
+#endif
+    class RequestBuilder : IRequestBuilder
     {
         public RequestBuilder(string baseUrl)
         {
-            BaseUrl = baseUrl;
+            Message = new HttpRequestMessage();
             Query = new NameValueCollection();
+            BaseUrl = baseUrl;
         }
 
+        public HttpRequestMessage Message { get; }
         public string BaseUrl { get; }
-        public HttpMethod HttpMethod { get; set; }
-        public HttpContent Content { get; set; }
         public NameValueCollection Query { get; }
 
         public HttpRequestMessage Build()
@@ -26,7 +31,9 @@ namespace YourRootNamespace.Clients.Helpers
                            Query.Cast<string>().Select(x =>
                                string.Concat(Uri.EscapeDataString(x), "=", Uri.EscapeDataString(Query[x]))));
 
-            return new HttpRequestMessage(HttpMethod, new Uri(url, UriKind.Relative)) {Content = Content};
+            Message.RequestUri = new Uri(url, UriKind.Relative);
+
+            return Message;
         }
     }
 }

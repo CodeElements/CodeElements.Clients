@@ -1,6 +1,11 @@
 ﻿namespace YourRootNamespace.Clients.Extensions
 {
-    public static class StringExtensions
+#if CLIENTS_INTERNAL
+    internal
+#else
+    public
+#endif
+    static class StringExtensions
     {
         public static string ToCamelCase(this string str)
         {

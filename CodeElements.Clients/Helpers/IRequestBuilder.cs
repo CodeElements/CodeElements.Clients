@@ -3,10 +3,14 @@ using System.Net.Http;
 
 namespace YourRootNamespace.Clients.Helpers
 {
-    public interface IRequestBuilder
+#if CLIENTS_INTERNAL
+    internal
+#else
+    public
+#endif
+    interface IRequestBuilder
     {
-        HttpMethod HttpMethod { get; set; }
-        HttpContent Content { get; set; }
+        HttpRequestMessage Message { get; }
         NameValueCollection Query { get; }
 
         HttpRequestMessage Build();

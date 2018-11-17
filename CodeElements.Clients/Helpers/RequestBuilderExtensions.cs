@@ -4,24 +4,31 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using YourRootNamespace.Clients.Extensions;
 
 namespace YourRootNamespace.Clients.Helpers
 {
-    public static class RequestBuilderExtensions
+#if CLIENTS_INTERNAL
+    internal
+#else
+    public
+#endif
+    static class RequestBuilderExtensions
     {
         public static IRestClient DefaultClient { get; set; }
 
         public static IRequestBuilder WithBody(this IRequestBuilder requestBuilder, object body)
         {
-            requestBuilder.Content = new JsonContent(body);
+            requestBuilder.Message.Content = new JsonContent(body);
             return requestBuilder;
         }
 
         public static IRequestBuilder WithBody(this IRequestBuilder requestBuilder, JsonContent body)
         {
-            requestBuilder.Content = body;
+            requestBuilder.Message.Content = body;
             return requestBuilder;
         }
 
@@ -31,10 +38,28 @@ namespace YourRootNamespace.Clients.Helpers
             return requestBuilder;
         }
 
+        public static IRequestBuilder ConfigureHeader(this IRequestBuilder requestBuilder, Action<HttpRequestHeaders> action)
+        {
+            action(requestBuilder.Message.Headers);
+            return requestBuilder;
+        }
+
+        public static async Task<HttpResponseMessage> Execute(this IRequestBuilder requestBuilder, IRestClient client, CancellationToken cancellationToken)
+        {
+            using (var request = requestBuilder.Build())
+            {
+                var response = await (client ?? DefaultClient).SendMessage(request, cancellationToken);
+                return response;
+            }
+        }
+
         public static async Task<HttpResponseMessage> Execute(this IRequestBuilder requestBuilder, IRestClient client)
         {
             using (var request = requestBuilder.Build())
-                return await (client ?? DefaultClient).SendMessage(request);
+            {
+                var response = await (client ?? DefaultClient).SendMessage(request, CancellationToken.None);
+                return response;
+            }
         }
 
         public static IEnumerable<KeyValuePair<string, string>> ToPairs(this NameValueCollection collection)

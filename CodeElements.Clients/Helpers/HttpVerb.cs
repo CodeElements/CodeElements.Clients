@@ -1,6 +1,11 @@
 ﻿namespace YourRootNamespace.Clients.Helpers
 {
-    public enum HttpVerb
+#if CLIENTS_INTERNAL
+    internal
+#else
+    public
+#endif
+    enum HttpVerb
     {
         Get,
         Post,

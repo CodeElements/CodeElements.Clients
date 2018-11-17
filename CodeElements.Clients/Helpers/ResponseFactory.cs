@@ -5,7 +5,12 @@ using Newtonsoft.Json;
 
 namespace YourRootNamespace.Clients.Helpers
 {
-    internal class ResponseFactory<T>
+#if CLIENTS_INTERNAL
+    internal
+#else
+    public
+#endif
+    class ResponseFactory<T>
     {
         private readonly Task<HttpResponseMessage> _response;
         private Action<T> _postProcessAction;
